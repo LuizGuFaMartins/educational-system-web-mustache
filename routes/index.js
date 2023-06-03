@@ -8,6 +8,18 @@ router.get("/", function (req, res) {
   });
 });
 
+router.get("/about", function (req, res) {
+  res.render("about", {
+    logoPath: "/images/logo-horizontal-removebg-preview.png",
+  });
+});
+
+router.get("/more", function (req, res) {
+  res.render("about", {
+    logoPath: "/images/logo-horizontal-removebg-preview.png",
+  });
+});
+
 router.get("/novo", function (req, res) {
   res.render("new-user", {});
 });
