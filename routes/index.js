@@ -1,48 +1,61 @@
-var express = require('express');
-var Task = require("../model/Tasks")
-var TaskSchema = require("../validators/TaskValidator")
-const Joi = require("joi")
+var express = require("express");
+var Users = require("../model/Users");
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  if (Task.list().length == 0) {
-    Task.new("Tarefa 1");
-    Task.new("Tarefa 2");
-  }
-
-  let obj = Task.getElementById(req.query.tid);
-  res.render('index', { tasks: Task.list(), task: obj });
+router.get("/", function (req, res) {
+  res.render("home", {
+    logoPath: "/images/logo-horizontal-removebg-preview.png",
+  });
 });
 
-router.post("/tarefas", function (req, res){
-    const {error, value} = TaskSchema.validate(req.body);
-    if (error) {
-      res.render('index', { tasks: Task.list(), erro: "Dados incompletos" });
-      return;
-    }
-    
-    const {id, nome} = value
-    if (id === undefined) {
-      //Inserir
-      Task.new(nome);
-    } else {
-      //Alterar
-      Task.update(id, nome);
-    }
-    
-    res.redirect("/");
-})
+router.get("/novo", function (req, res) {
+  res.render("new-user", {});
+});
 
-router.get("/tarefas/del/:id", function(req, res){
-  const {id} = req.params;
-  const {error, value} = Joi.number().integer().greater(0).validate(id)
+router.post("/create", function (req, res) {
+  Users.new({
+    ...req.body,
+  });
 
-  if (error || !Task.delete(value)) {
-    res.send("Falha ao excluir uma tarefa");
-    return;
-  }
   res.redirect("/");
-})
+});
+
+router.post("/login", function (req, res) {
+  const { email, senha } = req.body;
+  let user = Users.getElementByEmail(email);
+  if (user && senha === user.senha) {
+    console.log("\n\nUSER: ", user);
+
+    req.session.isUserLogged = true;
+    res.cookie("nome", user.nome, { expires: new Date(Date.now() + 10000) });
+    res.redirect("/books");
+  } else {
+    res.render("error", {
+      message: "ERROR - 400 - BAD REQUEST",
+      error: {
+        stack:
+          "Erro: O usuário informado não existe em nossa base de dados. Por favor verifique se as credenciais digitadas estão corretas ou crie uma nova conta.",
+      },
+    });
+  }
+});
+
+router.get("/intranet", function (req, res, next) {
+  if (req.session.isUserLogged) {
+    res.render("logged", { nome: req.cookies.nome });
+  } else {
+    res.render("error", {
+      message: "ERROR - 401 - UNAUTHORIZED",
+      error: {
+        stack: "Erro: Você não tem permissão para acessar essa página.",
+      },
+    });
+  }
+});
+
+router.get("/loggout", function (req, res, next) {
+  req.session.isUserLogged = false;
+  res.redirect("/");
+});
 
 module.exports = router;
