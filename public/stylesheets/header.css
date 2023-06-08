@@ -1,0 +1,27 @@
+@import url("./variables.css");
+
+.header {
+  background-color: var(--primary-color);
+  text-align: center;
+  height: 12vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+header img {
+  width: 250px;
+}
+
+.header nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header a {
+  margin-right: 20px;
+  text-decoration: none;
+  color: var(--secondary-color);
+}

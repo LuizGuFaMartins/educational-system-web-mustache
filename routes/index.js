@@ -16,7 +16,7 @@ router.get("/about", function (req, res) {
 });
 
 router.get("/more", function (req, res) {
-  res.render("about", {
+  res.render("info", {
     logoPath: "/images/logo-horizontal-removebg-preview.png",
   });
 });
