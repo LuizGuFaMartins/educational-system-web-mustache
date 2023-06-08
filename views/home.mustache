@@ -28,28 +28,32 @@
 
     <section class="form-container">
       <form class="form">
-        <h2>Login</h2>
-        <div>
-          <label for="username">Usuário:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Digite seu usuário"
-            required
-            class="input-field"
-          />
-        </div>
-        <div>
-          <label for="password">Senha:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Digite sua senha"
-            required
-            class="input-field"
-          />
+        <img src="{{ verticalLogoPath }}" alt="" />
+
+        <div class="form-fields">
+          <h2>Login</h2>
+          <div>
+            <label for="username">Usuário:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Digite seu usuário"
+              required
+              class="input-field"
+            />
+          </div>
+          <div>
+            <label for="password">Senha:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Digite sua senha"
+              required
+              class="input-field"
+            />
+          </div>
         </div>
         <button type="submit" class="submit-button">Entrar</button>
       </form>

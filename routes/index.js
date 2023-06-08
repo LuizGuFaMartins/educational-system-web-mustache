@@ -5,6 +5,7 @@ var router = express.Router();
 router.get("/", function (req, res) {
   res.render("home", {
     logoPath: "/images/logo-horizontal-removebg-preview.png",
+    verticalLogoPath: "/images/blue-vertical-logo.png",
   });
 });
 
