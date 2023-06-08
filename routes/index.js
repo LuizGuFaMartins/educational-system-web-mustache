@@ -21,6 +21,13 @@ router.get("/more", function (req, res) {
   });
 });
 
+router.get("/contact", function (req, res) {
+  res.render("contact", {
+    logoPath: "/images/logo-horizontal-removebg-preview.png",
+    verticalLogoPath: "/images/blue-vertical-logo.png",
+  });
+});
+
 router.get("/novo", function (req, res) {
   res.render("new-user", {});
 });
